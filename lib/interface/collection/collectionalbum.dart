@@ -158,7 +158,6 @@ class LeadingCollectionALbumTile extends StatelessWidget {
                 Ink.image(
                   image: FileImage(Provider.of<Collection>(context, listen: false).lastAlbum!.albumArt),
                   fit: BoxFit.fill,
-                  // filterQuality: FilterQuality.low,
                   height: this.height,
                   width: this.height,
                 ),
@@ -351,8 +350,24 @@ class CollectionAlbum extends StatelessWidget {
                           tracks: this.album!.tracks,
                         );
                       },
-                      title: Text(track.trackName!),
-                      subtitle: Text(track.trackArtistNames!.join(', ')),
+                      title: Marquee(
+                        text: track.trackName!,
+                        style: Theme.of(context).textTheme.headline2!,
+                        blankSpace: 100.0,
+                        velocity: 20.0,
+                        pauseAfterRound: Duration(seconds: 1),
+                      ),
+                      subtitle: Marquee(
+                        text: track.albumName! +
+                          ' - ' +
+                          (track.trackArtistNames!.length < 2
+                              ? track.trackArtistNames!.join(', ')
+                              : track.trackArtistNames!.sublist(0, 2).join(', ')),
+                        style: Theme.of(context).textTheme.headline5!,
+                        blankSpace: 100.0,
+                        velocity: 20.0,
+                        pauseAfterRound: Duration(seconds: 1),
+                      ),
                       leading: CircleAvatar(
                         child: Text('${track.trackNumber ?? 1}'),
                         backgroundImage: FileImage(this.album!.albumArt),

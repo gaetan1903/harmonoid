@@ -216,18 +216,32 @@ class CollectionTrackTile extends StatelessWidget {
                   tracks: <Track>[this.track],
                 ),
           dense: false,
-          isThreeLine: true,
           leading: CircleAvatar(
-            child: Text('${this.track.trackNumber ?? 1}'),
+            child: Text(
+              '${this.track.trackNumber ?? 1}',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
             backgroundImage: FileImage(this.track.albumArt),
           ),
-          title: Text(this.track.trackName!),
-          subtitle: Text(
-            this.track.albumName! +
-                '\n' +
-                (this.track.trackArtistNames!.length < 2
-                    ? this.track.trackArtistNames!.join(', ')
-                    : this.track.trackArtistNames!.sublist(0, 2).join(', ')),
+          title: Marquee(
+            text: this.track.trackName!,
+            style: Theme.of(context).textTheme.headline2!,
+            blankSpace: 100.0,
+            velocity: 20.0,
+            pauseAfterRound: Duration(seconds: 1),
+          ),
+          subtitle: Marquee(
+            text: this.track.albumName! +
+              ' - ' +
+              (this.track.trackArtistNames!.length < 2
+                  ? this.track.trackArtistNames!.join(', ')
+                  : this.track.trackArtistNames!.sublist(0, 2).join(', ')),
+            style: Theme.of(context).textTheme.headline5!,
+            blankSpace: 100.0,
+            velocity: 20.0,
+            pauseAfterRound: Duration(seconds: 1),
           ),
           trailing: popupMenuButton,
         ),
@@ -291,11 +305,12 @@ class LeadingCollectionTrackTile extends StatelessWidget {
                             color: Colors.transparent,
                             height: 8.0,
                           ),
-                          Text(
-                            collection.lastTrack!.trackName!,
-                            style: Theme.of(context).textTheme.headline1,
-                            textAlign: TextAlign.start,
-                            maxLines: 1,
+                          Marquee(
+                            text: collection.lastTrack!.trackName!,
+                            style: Theme.of(context).textTheme.headline1!,
+                            blankSpace: 100.0,
+                            velocity: 20.0,
+                            pauseAfterRound: Duration(seconds: 1),
                           ),
                           Text(
                             collection.lastTrack!.albumName!,
